@@ -53,6 +53,20 @@ fn main() {
     let mut g2d = Gfx2d::new(opengl, &mut factory);
     let mut events = Events::new(EventSettings::new().lazy(true));
     while let Some(e) = events.next(&mut window) {
+        if let Some(Button::Mouse(button)) = e.press_args() {
+            println!("Pressed mouse button '{:?}'", button);
+        }
+        if let Some(Button::Keyboard(key)) = e.press_args() {
+            println!("Pressed keyboard key '{:?}'", key);
+        }
+        if let Some(button) = e.release_args() {
+            match button {
+                Button::Keyboard(key) => println!("Released keyboard key '{:?}'", key),
+                Button::Mouse(button) => println!("Released mouse button '{:?}'", button),
+                Button::Controller(button) => println!("Released controller button '{:?}'", button),
+                Button::Hat(hat) => println!("Released controller hat `{:?}`", hat),
+            }
+        }
         if let Some(args) = e.render_args() {
             g2d.draw(&mut encoder, &output_color, &output_stencil, args.viewport(), |c, g| {
                 clear([0.8, 0.8, 0.8, 1.0], g);
