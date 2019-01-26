@@ -1,12 +1,6 @@
-extern crate piston;
-extern crate graphics;
-extern crate glutin_window;
-extern crate opengl_graphics;
-
-use graphics::Context;
-use opengl_graphics::GlGraphics;
+use piston_window::{G2d, Context};
 
 pub trait Widget {
-    fn draw(&self, context: Context, gl: &mut GlGraphics, width: f64, height: f64);
+    fn draw(&self, context: Context, gl: &mut G2d, width: u32, height: u32);
 }
 

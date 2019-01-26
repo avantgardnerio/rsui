@@ -1,7 +1,6 @@
-use graphics::Context;
+use piston_window::{G2d, Context, Rectangle, rectangle};
+
 use crate::widget::Widget;
-use graphics::rectangle;
-use opengl_graphics::GlGraphics;
 
 pub struct GridPanel {
     background_color: [f32; 4]
@@ -16,8 +15,9 @@ impl GridPanel {
 }
 
 impl Widget for GridPanel {
-    fn draw(&self, context: Context, gl: &mut GlGraphics, width: f64, height: f64) {
-        let square = rectangle::rectangle_by_corners(0.0, 0.0, width, height);
-        rectangle(self.background_color, square, context.transform, gl);
+    fn draw(&self, context: Context, gl: &mut G2d, width: u32, height: u32) {
+        let rectangle = Rectangle::new(self.background_color);
+        let square = rectangle::rectangle_by_corners(0.0, 0.0, width as f64, height as f64);
+        rectangle.draw(square, &context.draw_state, context.transform, gl);
     }
 }
