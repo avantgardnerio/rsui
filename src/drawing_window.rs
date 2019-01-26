@@ -20,9 +20,9 @@ impl<'a> DrawingWindow<'a> {
 
     pub fn run(&mut self) {
         let root = self.root;
-        let width = self.window.size().width;
-        let height = self.window.size().height;
         while let Some(event) = self.window.next() {
+            let width = self.window.size().width;
+            let height = self.window.size().height;
             self.window.draw_2d(&event, |context, gl| {
                 root.draw(context, gl, width, height);
             });
