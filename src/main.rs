@@ -1,19 +1,12 @@
-extern crate piston;
-extern crate graphics;
-extern crate glutin_window;
-extern crate opengl_graphics;
-
-use piston::window::WindowSettings;
-use piston::event_loop::*;
-use piston::input::*;
-use glutin_window::GlutinWindow as Window;
-use opengl_graphics::{ GlGraphics, OpenGL };
-
 mod drawing_window;
+mod grid_panel;
+mod widget;
 
 use drawing_window::DrawingWindow;
+use grid_panel::GridPanel;
 
 fn main() {
-    let mut app = DrawingWindow::new();
+    let red_panel = GridPanel {};
+    let mut app = DrawingWindow::new(red_panel);
     app.run();
 }

@@ -8,15 +8,17 @@ use piston::event_loop::*;
 use piston::input::*;
 use glutin_window::GlutinWindow as Window;
 use opengl_graphics::{ GlGraphics, OpenGL };
+use crate::widget::Widget;
 
-pub struct DrawingWindow {
+pub struct DrawingWindow<'a> {
     pub gl: GlGraphics,
     pub window: Window,
+    pub root: &'a Widget,
     pub rotation: f64
 }
 
-impl DrawingWindow {
-    pub fn new() -> Self {
+impl<'a> DrawingWindow<'a> {
+    pub fn new(root: &'a Widget) -> Self {
         let opengl = OpenGL::V3_2;
         let mut window: Window = WindowSettings::new("Title", [200, 200])
             .opengl(opengl)
@@ -25,6 +27,7 @@ impl DrawingWindow {
         DrawingWindow {
             gl: GlGraphics::new(opengl),
             window,
+            root,
             rotation: 0.0
         }
     }
@@ -53,11 +56,11 @@ impl DrawingWindow {
         let (x, y) = (args.width / 2.0,
                       args.height / 2.0);
 
-        self.gl.draw(args.viewport(), |c, gl| {
+        self.gl.draw(args.viewport(), |context, gl| {
             // Clear the screen.
             clear(GREEN, gl);
 
-            let transform = c.transform.trans(x, y)
+            let transform = context.transform.trans(x, y)
                 .rot_rad(rotation)
                 .trans(-25.0, -25.0);
 
