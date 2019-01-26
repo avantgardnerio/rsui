@@ -13,8 +13,7 @@ use crate::widget::Widget;
 pub struct DrawingWindow<'a> {
     pub gl: GlGraphics,
     pub window: Window,
-    pub root: &'a Widget,
-    pub rotation: f64
+    pub root: &'a Widget
 }
 
 impl<'a> DrawingWindow<'a> {
@@ -27,8 +26,7 @@ impl<'a> DrawingWindow<'a> {
         DrawingWindow {
             gl: GlGraphics::new(opengl),
             window,
-            root,
-            rotation: 0.0
+            root
         }
     }
 
@@ -52,16 +50,14 @@ impl<'a> DrawingWindow<'a> {
         const RED:   [f32; 4] = [1.0, 0.0, 0.0, 1.0];
 
         let square = rectangle::square(0.0, 0.0, 50.0);
-        let rotation = self.rotation;
         let (x, y) = (args.width / 2.0,
                       args.height / 2.0);
-
+        
         self.gl.draw(args.viewport(), |context, gl| {
             // Clear the screen.
             clear(GREEN, gl);
 
             let transform = context.transform.trans(x, y)
-                .rot_rad(rotation)
                 .trans(-25.0, -25.0);
 
             // Draw a box rotating around the middle of the screen.
@@ -70,7 +66,5 @@ impl<'a> DrawingWindow<'a> {
     }
 
     pub fn update(&mut self, args: &UpdateArgs) {
-        // Rotate 2 radians per second.
-        self.rotation += 2.0 * args.dt;
     }
 }

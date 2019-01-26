@@ -12,6 +12,6 @@ impl GridPanel {
 
 impl Widget for GridPanel {
     fn draw(&self, context: Context, gl: GlGraphics) {
-        println!("Widget.draw()")
+        println!("Widget.draw()");
     }
 }
