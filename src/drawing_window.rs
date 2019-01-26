@@ -48,9 +48,6 @@ impl<'a> DrawingWindow<'a> {
 
         let root = self.root;
         self.gl.draw(args.viewport(), |context, gl: &mut opengl_graphics::GlGraphics| {
-            const GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
-            clear(GREEN, gl);
-
             root.draw(context, gl, args.width, args.height);
         });
     }
