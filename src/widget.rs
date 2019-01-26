@@ -7,9 +7,6 @@ use opengl_graphics::{ GlGraphics };
 use graphics::Context;
 
 pub trait Widget {
-    fn draw(context: Context, gl: GlGraphics);
+    fn draw(&self, context: Context, gl: GlGraphics);
 }
 
-impl Widget {
-
-}

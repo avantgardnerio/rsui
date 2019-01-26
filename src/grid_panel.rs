@@ -11,7 +11,7 @@ impl GridPanel {
 }
 
 impl Widget for GridPanel {
-    fn draw(context: Context, gl: GlGraphics) {
-        unimplemented!()
+    fn draw(&self, context: Context, gl: GlGraphics) {
+        println!("Widget.draw()")
     }
 }
