@@ -6,11 +6,6 @@ edition = "2018"
 
 [dependencies]
 piston = "0.40.0"
-piston2d-gfx_graphics = "0.56.0"
+piston2d-graphics = "0.29.0"
 pistoncore-glutin_window = "0.52.0"
-gfx_device_gl = "0.15.0"
-gfx = "0.17.1"
-
-[dependencies.piston2d-graphics]
-version = "0.30.0"
-features = ["glyph_cache_rusttype"]
+piston2d-opengl_graphics = "0.58.0"

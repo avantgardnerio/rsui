@@ -1,84 +1,78 @@
-extern crate glutin_window;
 extern crate piston;
 extern crate graphics;
-extern crate gfx_graphics;
-extern crate gfx;
-extern crate gfx_device_gl;
+extern crate glutin_window;
+extern crate opengl_graphics;
 
-use gfx::traits::*;
-use graphics::*;
+use piston::window::WindowSettings;
+use piston::event_loop::*;
 use piston::input::*;
+use glutin_window::GlutinWindow as Window;
+use opengl_graphics::{ GlGraphics, OpenGL };
 
-use gfx::memory::Typed;
-use gfx::format::{DepthStencil, Formatted, Srgba8};
-use glutin_window::{GlutinWindow, OpenGL};
-use piston::window::{WindowSettings};
-use piston::window::OpenGLWindow;
-use piston::window::Window;
-use piston::event_loop::{Events, EventSettings, EventLoop};
+pub struct App {
+    gl: GlGraphics, // OpenGL drawing backend.
+    rotation: f64   // Rotation for the square.
+}
 
-use gfx_graphics::{Gfx2d};
+impl App {
+    fn render(&mut self, args: &RenderArgs) {
+        use graphics::*;
 
-fn main() {
-    println!("Hello, world!");
+        const GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
+        const RED:   [f32; 4] = [1.0, 0.0, 0.0, 1.0];
 
-    let opengl = OpenGL::V3_2;
-    let samples = 4;
-    let mut window: GlutinWindow = WindowSettings::new(
-        "piston: draw_state",
-        [600, 600]
-    )
-        .exit_on_esc(true)
-        .samples(samples)
-        .opengl(opengl)
-        .build()
-        .unwrap();
+        let square = rectangle::square(0.0, 0.0, 50.0);
+        let rotation = self.rotation;
+        let (x, y) = (args.width / 2.0,
+                      args.height / 2.0);
 
-    let (mut device, mut factory) = gfx_device_gl::create(|s|
-        window.get_proc_address(s) as *const std::os::raw::c_void);
-    let mut encoder = factory.create_command_buffer().into();
+        self.gl.draw(args.viewport(), |c, gl| {
+            // Clear the screen.
+            clear(GREEN, gl);
 
-    let draw_size = window.draw_size();
-    let aa = samples as gfx::texture::NumSamples;
-    let dim = (draw_size.width as u16, draw_size.height as u16, 1, aa.into());
-    let color_format = <Srgba8 as Formatted>::get_format();
-    let depth_format = <DepthStencil as Formatted>::get_format();
-    let (output_color, output_stencil) =
-        gfx_device_gl::create_main_targets_raw(dim,
-                                               color_format.0,
-                                               depth_format.0);
-    let output_color = Typed::new(output_color);
-    let output_stencil = Typed::new(output_stencil);
+            let transform = c.transform.trans(x, y)
+                .rot_rad(rotation)
+                .trans(-25.0, -25.0);
 
-    let mut g2d = Gfx2d::new(opengl, &mut factory);
-    let mut events = Events::new(EventSettings::new().lazy(true));
-    while let Some(e) = events.next(&mut window) {
-        if let Some(Button::Mouse(button)) = e.press_args() {
-            println!("Pressed mouse button '{:?}'", button);
-        }
-        if let Some(Button::Keyboard(key)) = e.press_args() {
-            println!("Pressed keyboard key '{:?}'", key);
-        }
-        if let Some(button) = e.release_args() {
-            match button {
-                Button::Keyboard(key) => println!("Released keyboard key '{:?}'", key),
-                Button::Mouse(button) => println!("Released mouse button '{:?}'", button),
-                Button::Controller(button) => println!("Released controller button '{:?}'", button),
-                Button::Hat(hat) => println!("Released controller hat `{:?}`", hat),
-            }
-        }
-        if let Some(args) = e.render_args() {
-            g2d.draw(&mut encoder, &output_color, &output_stencil, args.viewport(), |c, g| {
-                clear([0.8, 0.8, 0.8, 1.0], g);
-                Rectangle::new([1.0, 0.0, 0.0, 1.0])
-                    .draw([0.0, 0.0, 100.0, 100.0], &c.draw_state, c.transform, g);
-            });
-            encoder.flush(&mut device);
-        }
+            // Draw a box rotating around the middle of the screen.
+            rectangle(RED, square, transform, gl);
+        });
+    }
 
-        if let Some(_) = e.after_render_args() {
-            device.cleanup();
-        }
+    fn update(&mut self, args: &UpdateArgs) {
+        // Rotate 2 radians per second.
+        self.rotation += 2.0 * args.dt;
     }
 }
 
+fn main() {
+    // Change this to OpenGL::V2_1 if not working.
+    let opengl = OpenGL::V3_2;
+
+    // Create an Glutin window.
+    let mut window: Window = WindowSettings::new(
+        "spinning-square",
+        [200, 200]
+    )
+        .opengl(opengl)
+        .exit_on_esc(true)
+        .build()
+        .unwrap();
+
+    // Create a new game and run it.
+    let mut app = App {
+        gl: GlGraphics::new(opengl),
+        rotation: 0.0
+    };
+
+    let mut events = Events::new(EventSettings::new());
+    while let Some(e) = events.next(&mut window) {
+        if let Some(r) = e.render_args() {
+            app.render(&r);
+        }
+
+        if let Some(u) = e.update_args() {
+            app.update(&u);
+        }
+    }
+}
