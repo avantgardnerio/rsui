@@ -44,10 +44,8 @@ impl<'a> DrawingWindow<'a> {
     }
 
     pub fn render(&mut self, args: &RenderArgs) {
-        use graphics::*;
-
         let root = self.root;
-        self.gl.draw(args.viewport(), |context, gl: &mut opengl_graphics::GlGraphics| {
+        self.gl.draw(args.viewport(), |context, gl: &mut GlGraphics| {
             root.draw(context, gl, args.width, args.height);
         });
     }
