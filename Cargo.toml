@@ -5,5 +5,5 @@ authors = ["Brent Gardner <bgardner@squarelabs.net>"]
 edition = "2018"
 
 [dependencies]
-gfx_device_gl = "0.13.0"
-piston_window = "0.64.0"
+piston_window = "0.68.0"
+pistoncore-sdl2_window = "0.42.0"

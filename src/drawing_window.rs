@@ -1,17 +1,23 @@
 use piston_window::{PistonWindow, WindowSettings, Window};
+use sdl2_window::Sdl2Window;
 
 use crate::widget::Widget;
 
 pub struct DrawingWindow<'a> {
-    pub window: PistonWindow,
+    pub window: PistonWindow<Sdl2Window>,
     pub root: &'a Widget,
 }
 
 impl<'a> DrawingWindow<'a> {
     pub fn new(root: &'a Widget) -> Self {
-        let window: PistonWindow = WindowSettings::new("Title", [640, 480])
-            .build()
-            .unwrap();
+
+        let window: PistonWindow<Sdl2Window> =
+             WindowSettings::new("title", [640, 480])
+                 .build().unwrap();
+
+//        let window: PistonWindow = WindowSettings::new("Title", [640, 480])
+//            .build()
+//            .unwrap();
         DrawingWindow {
             window,
             root,
