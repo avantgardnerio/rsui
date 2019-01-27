@@ -1,0 +1,10 @@
+os:
+- windows
+- linux
+- osx
+language: rust
+rust:
+- stable
+- beta
+script:
+- cargo build -v
