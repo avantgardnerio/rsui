@@ -8,3 +8,10 @@ rust:
 - beta
 script:
 - cargo build -v
+
+dist: xenial
+addons:
+  apt:
+    packages:
+    - xorg-dev
+    - libglu1-mesa-dev
