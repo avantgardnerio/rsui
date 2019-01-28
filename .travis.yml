@@ -20,4 +20,4 @@ script:
 - cargo build --release
 
 after_success:
-- echo Success
+- ./scripts/after.sh

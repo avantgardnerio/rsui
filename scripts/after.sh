@@ -31,9 +31,9 @@ if [ "$BRANCH" = "master" ]
     mv /tmp/hub*/bin/hub .
     hub version
 
-    # tag in git
-    git tag $NEW_VER
-    git push --tags
+    # publish to GitHub
+    ls -lh target/release/rsui
+    hub release create -a target/release/rsui $NEW_VER
 
     # publish crate
     cargo login $CRATESIO_TOKEN
