@@ -5,5 +5,5 @@ authors = ["Brent Gardner <bgardner@squarelabs.net>"]
 edition = "2018"
 
 [dependencies]
-piston_window = "0.68.0"
-pistoncore-glfw_window = "0.33.0"
+piston_window = "0.87.0"
+pistoncore-glfw_window = "0.47.0"
