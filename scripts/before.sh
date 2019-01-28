@@ -41,4 +41,5 @@ if [ "$BRANCH" = "master" ]
     echo "Upgrading to $NEW_VER..."
     sed -i.bak "s/version = \"[0-9\.]*\"/version = \"$NEW_VER\"/g" Cargo.toml
     cat Cargo.toml
+    git tag $NEW_VER
 fi
