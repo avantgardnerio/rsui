@@ -15,13 +15,3 @@ addons:
 
 after_success:
 - echo Success
-
-jobs:
-  include:
-  - stage: version
-    os:
-    - linux
-    - osx
-    script: echo "Hello world"
-  - stage: build
-    script: echo "building..." #cargo build -v
