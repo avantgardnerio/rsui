@@ -50,18 +50,19 @@ if [ "$BRANCH" = "master" ]
     echo "On master, performing release..."
 
     # publish to GitHub
-    ls -lh target/release/rsui
+    cd target/release/
     if [ "$ZIP_EXT" == "tgz" ]
     then
-        tar -czvf rsui-$DIST-$NEW_VER.$ZIP_EXT target/release/rsui
+        tar -czvf rsui-$DIST-$NEW_VER.$ZIP_EXT rsui
     else
-        zip -r rsui-$DIST-$NEW_VER.$ZIP_EXT target/release/rsui
+        zip -r rsui-$DIST-$NEW_VER.$ZIP_EXT rsui
     fi
     /tmp/hub release create -m $NEW_VER -a rsui-$DIST-$NEW_VER.$ZIP_EXT $NEW_VER
     /tmp/hub release edit -m $NEW_VER -a rsui-$DIST-$NEW_VER.$ZIP_EXT $NEW_VER
+    cd -
 
     # publish crate
     cargo login $CRATESIO_TOKEN
     cargo package --allow-dirty
-    cargo publish --allow-dirty
+    cargo publish --allow-dirty || true # ignore race between OS builds
 fi
