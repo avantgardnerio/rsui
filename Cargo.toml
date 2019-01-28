@@ -12,3 +12,4 @@ homepage = "https://github.com/bgard6977/rsui"
 [dependencies]
 piston_window = "0.87.0"
 pistoncore-glfw_window = "0.47.0"
+find_folder = "0.3.0" # TODO: bake fonts into static build
