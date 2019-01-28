@@ -1,5 +1,7 @@
 #!/bin/bash
 printenv
+which hub
+hub version
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 echo "Branch=$BRANCH"
 if [ "$BRANCH" = "master" ]
@@ -10,6 +12,4 @@ if [ "$BRANCH" = "master" ]
     NEW_VER=$(echo $PREV_VER | awk -F'[-.]' '{print $1"."$2+1"."$3}')
     echo "Upgrading to $NEW_VER..."
     sed -i '' "s/version = \"[0-9\.]*\"/version = \"$NEW_VER\"/g" Cargo.toml
-    git tag $NEW_VER
-    git push --tags
 fi

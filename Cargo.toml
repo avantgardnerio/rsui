@@ -2,8 +2,12 @@
 name = "rsui"
 version = "0.1.0"
 description = "A cross-platform UI library for Rust"
+license = "MIT"
 authors = ["Brent Gardner <bgardner@squarelabs.net>"]
 edition = "2018"
+readme = "readme.md"
+repository = "https://github.com/bgard6977/rsui.git"
+homepage = "https://github.com/bgard6977/rsui"
 
 [dependencies]
 piston_window = "0.87.0"
