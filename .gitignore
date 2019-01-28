@@ -6,3 +6,6 @@ target/
 *.iml
 *.iws
 .idea/
+
+# GitHub
+hub

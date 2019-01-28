@@ -16,5 +16,8 @@ addons:
 before_install:
 - ./scripts/before.sh
 
+script:
+- cargo build --release
+
 after_success:
 - echo Success
