@@ -1,20 +1,24 @@
+os:
+#- windows
+- linux
+- osx
+language: rust
+rust:
+- stable
+
+dist: xenial
+addons:
+  apt:
+    packages:
+    - xorg-dev
+    - libglu1-mesa-dev
+
+after_success:
+- echo Success
+
 jobs:
   include:
-  - stage: version 1
+  - stage: version
     script: echo "Hello world"
-  - stage: test 2
-    os:
-    - linux
-    - osx
-    language: rust
-    rust:
-    - stable
-    dist: xenial
-    addons:
-      apt:
-        packages:
-        - xorg-dev
-        - libglu1-mesa-dev
+  - stage: test
     script: echo "building..." #cargo build -v
-    after_success:
-    - echo Success
