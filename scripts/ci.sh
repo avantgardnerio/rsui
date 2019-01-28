@@ -53,9 +53,9 @@ if [ "$BRANCH" = "master" ]
     ls -lh target/release/rsui
     if [ "$ZIP_EXT" == "tgz" ]
     then
-        tar -czvf rsui-$DIST-$NEW_VER.tar.gz target/release/rsui
+        tar -czvf rsui-$DIST-$NEW_VER.$ZIP_EXT target/release/rsui
     else
-        zip -r rsui-$DIST-$NEW_VER.zip target/release/rsui
+        zip -r rsui-$DIST-$NEW_VER.$ZIP_EXT target/release/rsui
     fi
     /tmp/hub release create -m $NEW_VER -a rsui-$DIST-$NEW_VER.$ZIP_EXT $NEW_VER
 
