@@ -1,12 +1,10 @@
 os:
-- windows
+#- windows
 - linux
 - osx
 language: rust
 rust:
 - stable
-script:
-- cargo build -v
 
 dist: xenial
 addons:
@@ -17,3 +15,10 @@ addons:
 
 after_success:
 - echo Success
+
+jobs:
+  include:
+  - stage: version
+    script: echo "Hello world"
+  - stage: build
+    script: cargo build -v
