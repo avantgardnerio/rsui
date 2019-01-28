@@ -33,7 +33,13 @@ if [ "$BRANCH" = "master" ]
 
     # publish to GitHub
     ls -lh target/release/rsui
-    hub release create -a target/release/rsui $NEW_VER
+    if [ "$ZIP_EXT" == "tgz" ]
+    then
+        tar -czvf rsui-$DIST.tar.gz target/release/rsui
+    else
+        zip -r rsui-$DIST.zip target/release/rsui
+    fi
+    hub release create -a rsui-$DIST.zip $NEW_VER
 
     # publish crate
     cargo login $CRATESIO_TOKEN
