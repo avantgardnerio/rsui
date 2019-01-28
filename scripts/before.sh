@@ -24,7 +24,7 @@ if [ "$BRANCH" = "master" ]
     wget -q https://github.com/github/hub/releases/download/v$HUB_VER/hub-$DIST-amd64-$HUB_VER.$ZIP_EXT
     if [ "$ZIP_EXT" == "tgz" ]
     then
-        tar -xfv hub-$DIST-amd64-$HUB_VER.$ZIP_EXT
+        tar -xvf hub-$DIST-amd64-$HUB_VER.$ZIP_EXT
     else
         unzip hub-$DIST-amd64-$HUB_VER.$ZIP_EXT
     fi
