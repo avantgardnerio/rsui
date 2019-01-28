@@ -1,7 +1,3 @@
-os:
-#- windows
-- linux
-- osx
 language: rust
 rust:
 - stable
@@ -18,7 +14,12 @@ after_success:
 
 jobs:
   include:
-  - stage: version
+  - stage: version 1
+    os: linux
     script: echo "Hello world"
-  - stage: build
+  - stage: build 2
+    os:
+    #- windows
+    - linux
+    - osx
     script: echo "building..." #cargo build -v
