@@ -1,5 +1,7 @@
 #!/bin/bash
+printenv
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "Branch=$BRANCH"
 if [ "$BRANCH" = "master" ]
   then
     echo "On master, performing release..."

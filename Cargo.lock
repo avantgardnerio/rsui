@@ -230,14 +230,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "drawing"
-version = "0.1.0"
-dependencies = [
- "piston_window 0.87.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "pistoncore-glfw_window 0.47.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "either"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -981,6 +973,14 @@ dependencies = [
 name = "read_color"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "rsui"
+version = "0.1.0"
+dependencies = [
+ "piston_window 0.87.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pistoncore-glfw_window 0.47.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "rustc-demangle"
