@@ -6,7 +6,7 @@
 
 A cross platform UI toolkit based on Piston.
 
-Pronounced "ru-su-ee".
+Pronounced "are-sue-we".
 
 ## Principles
 
