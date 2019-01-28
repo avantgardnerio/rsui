@@ -1,5 +1,5 @@
 os:
-- windows
+#- windows
 - linux
 - osx
 language: rust
@@ -19,6 +19,3 @@ addons:
 
 script:
 - ./scripts/ci.sh
-
-allow_failure:
-  env: ALLOW_FAILURE=true
