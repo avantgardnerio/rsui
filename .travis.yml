@@ -17,11 +17,5 @@ addons:
     - xorg-dev
     - libglu1-mesa-dev
 
-before_install:
-- ./scripts/before.sh
-
 script:
-- cargo build --release
-
-after_success:
-- ./scripts/after.sh
+- ./scripts/ci.sh

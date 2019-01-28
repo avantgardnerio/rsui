@@ -29,8 +29,6 @@ if [ "$BRANCH" = "master" ]
         unzip hub-$DIST-amd64-$HUB_VER.$ZIP_EXT
     fi
     cd -
-    ls -l /tmp | grep hub
-    ls -l /tmp/hub*/bin/
     mv /tmp/hub*/bin/hub /tmp/hub
     /tmp/hub version
 
@@ -41,5 +39,28 @@ if [ "$BRANCH" = "master" ]
     echo "Upgrading to $NEW_VER..."
     sed -i.bak "s/version = \"[0-9\.]*\"/version = \"$NEW_VER\"/g" Cargo.toml
     cat Cargo.toml
-    git tag $NEW_VER
+fi
+
+# build
+cargo build --release
+
+# release
+if [ "$BRANCH" = "master" ]
+  then
+    echo "On master, performing release..."
+
+    # publish to GitHub
+    ls -lh target/release/rsui
+    if [ "$ZIP_EXT" == "tgz" ]
+    then
+        tar -czvf rsui-$DIST-$NEW_VER.tar.gz target/release/rsui
+    else
+        zip -r rsui-$DIST-$NEW_VER.zip target/release/rsui
+    fi
+    /tmp/hub release create -m $NEW_VER -a rsui-$DIST-$NEW_VER.zip $NEW_VER
+
+    # publish crate
+    cargo login $CRATESIO_TOKEN
+    cargo package --allow-dirty
+    cargo publish --allow-dirty
 fi
