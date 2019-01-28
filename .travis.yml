@@ -13,5 +13,8 @@ addons:
     - xorg-dev
     - libglu1-mesa-dev
 
+before_install:
+- ./scripts/before.sh
+
 after_success:
 - echo Success
