@@ -21,4 +21,4 @@ jobs:
   - stage: version
     script: echo "Hello world"
   - stage: build
-    script: cargo build -v
+    script: echo "building..." #cargo build -v
