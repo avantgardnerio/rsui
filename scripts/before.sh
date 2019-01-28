@@ -31,8 +31,8 @@ if [ "$BRANCH" = "master" ]
     cd -
     ls -l /tmp | grep hub
     ls -l /tmp/hub*/bin/
-    mv /tmp/hub*/bin/hub .
-    hub version
+    mv /tmp/hub*/bin/hub /tmp/hub
+    /tmp/hub version
 
     # version
     PREV_VER=$(git describe --tags HEAD~1 | awk -F'[-.]' '{print $1"."$2"."$3}')
