@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -x
 
 BRANCH=$(git branch | grep -o master)
 echo "Branch=$BRANCH"
