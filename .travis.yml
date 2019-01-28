@@ -20,5 +20,5 @@ jobs:
   include:
   - stage: version
     script: echo "Hello world"
-  - stage: test
+  - stage: build
     script: echo "building..." #cargo build -v
