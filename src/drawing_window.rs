@@ -16,12 +16,9 @@ impl<'a> DrawingWindow<'a> {
              WindowSettings::new("title", [640, 480])
                  .build().unwrap();
 
-        let assets = find_folder::Search::ParentsThenKids(3, 3)
-            .for_folder("assets").unwrap();
-        println!("{:?}", assets);
-        let ref font = assets.join("FiraSans-Regular.ttf");
+        let font_data: &[u8] = include_bytes!("../assets/FiraSans-Regular.ttf");
         let factory = window.factory.clone();
-        let glyphs = Glyphs::new(font, factory, TextureSettings::new()).unwrap();
+        let glyphs = Glyphs::from_bytes(font_data, factory, TextureSettings::new()).unwrap();
 
         DrawingWindow {
             window,
