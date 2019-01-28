@@ -57,8 +57,7 @@ if [ "$BRANCH" = "master" ]
     else
         zip -r rsui-$DIST-$NEW_VER.zip target/release/rsui
     fi
-    /tmp/hub release create -m $NEW_VER -a rsui-$DIST-$NEW_VER.zip $NEW_VER
-    /tmp/hub release edit -a rsui-$DIST-$NEW_VER.zip $NEW_VER
+    /tmp/hub release create -m $NEW_VER -a rsui-$DIST-$NEW_VER.$ZIP_EXT $NEW_VER
 
     # publish crate
     cargo login $CRATESIO_TOKEN
