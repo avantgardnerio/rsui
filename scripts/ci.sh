@@ -6,8 +6,8 @@ export UNAME="$(uname -s)"
 case "${UNAME}" in
     Linux*)     export DIST=linux ZIP_EXT=tgz;;
     Darwin*)    export DIST=darwin ZIP_EXT=tgz;;
-    CYGWIN*)    export DIST=windows ZIP_EXT=zip;;
-    MINGW*)     export DIST=windows ZIP_EXT=zip;;
+    CYGWIN*)    export DIST=windows ZIP_EXT=zip ALLOW_FAILURE=true;;
+    MINGW*)     export DIST=windows ZIP_EXT=zip ALLOW_FAILURE=true;;
     *)          export DIST="UNKNOWN:${UNAME}"
 esac
 echo DIST=${DIST} EXT=$ZIP_EXT
