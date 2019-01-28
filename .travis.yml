@@ -14,3 +14,6 @@ addons:
     packages:
     - xorg-dev
     - libglu1-mesa-dev
+
+after_success:
+- echo Success
