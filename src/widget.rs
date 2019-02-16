@@ -1,5 +1,14 @@
 use piston_window::{G2d, Context, Glyphs};
 
+pub type Point = [f64; 2];
+
+pub type Color = [f32; 4];
+
+pub struct Rect {
+    origin: Point,
+    size: Point
+}
+
 pub trait Widget {
     fn add_child(&mut self, child: Box<Widget>);
 
@@ -7,13 +16,19 @@ pub trait Widget {
 }
 
 pub struct WidgetImpl {
+    bounds: Rect,
     children: Vec<Box<Widget>>
 }
 
 impl WidgetImpl {
     pub fn new() -> Self {
         let children: Vec<Box<Widget>> = Vec::new();
+        let bounds = Rect {
+            origin: [0.0, 0.0],
+            size: [0.0, 0.0]
+        };
         WidgetImpl {
+            bounds,
             children
         }
     }
