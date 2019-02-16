@@ -30,11 +30,20 @@ impl DrawingWindow {
     }
 
     pub fn run(&mut self) {
+        let mut first = true;
         let root = &mut self.root;
         let glyphs = &mut self.glyphs;
         while let Some(event) = self.window.next() {
             let width = self.window.size().width;
             let height = self.window.size().height;
+            if(first) {
+                let rect = Rect {
+                    origin: [0.0, 0.0],
+                    size: [width as f64, height as f64]
+                };
+                root.layout(rect);
+                first = false;
+            }
             self.window.draw_2d(&event, |context, gl| {
                 root.draw(context, gl, width, height, glyphs);
             });

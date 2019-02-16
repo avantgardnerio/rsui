@@ -4,6 +4,7 @@ pub type Point = [f64; 2];
 
 pub type Color = [f32; 4];
 
+#[derive(Copy, Clone)]
 pub struct Rect {
     pub origin: Point,
     pub size: Point
@@ -18,8 +19,8 @@ pub trait Widget {
 }
 
 pub struct WidgetImpl {
-    bounds: Rect,
-    children: Vec<Box<Widget>>
+    pub bounds: Rect,
+    pub children: Vec<Box<Widget>>
 }
 
 impl WidgetImpl {
