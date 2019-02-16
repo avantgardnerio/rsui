@@ -25,6 +25,6 @@ impl Widget for WidgetImpl {
     }
 
     fn draw(&self, c: Context, gl: &mut G2d, width: f64, height: f64, glyphs: &mut Glyphs) {
-
+        self.children.iter().for_each(|it| it.draw(c, gl, width, height, glyphs))
     }
 }

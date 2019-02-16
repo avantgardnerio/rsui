@@ -45,5 +45,7 @@ impl Widget for GridPanel {
             Text::new_color(white, 24).draw(&y.to_string(), glyphs, &c.draw_state, transform, gl)
                 .unwrap();
         }
+
+        self.widget.draw(c, gl, width, height, glyphs)
     }
 }
