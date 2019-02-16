@@ -5,11 +5,13 @@ pub type Point = [f64; 2];
 pub type Color = [f32; 4];
 
 pub struct Rect {
-    origin: Point,
-    size: Point
+    pub origin: Point,
+    pub size: Point
 }
 
 pub trait Widget {
+    fn layout(&mut self, bounds: Rect);
+    
     fn add_child(&mut self, child: Box<Widget>);
 
     fn draw(&self, context: Context, gl: &mut G2d, width: f64, height: f64, glyphs: &mut Glyphs);
@@ -35,6 +37,10 @@ impl WidgetImpl {
 }
 
 impl Widget for WidgetImpl {
+    fn layout(&mut self, bounds: Rect) {
+        self.bounds = bounds;
+    }
+
     fn add_child(&mut self, child: Box<Widget>) {
         self.children.push(child)
     }

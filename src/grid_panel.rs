@@ -3,6 +3,7 @@ use piston_window::text::Text;
 
 use crate::widget::Widget;
 use crate::widget::WidgetImpl;
+use crate::widget::Rect;
 
 pub struct GridPanel {
     background_color: [f32; 4],
@@ -20,6 +21,10 @@ impl GridPanel {
 }
 
 impl Widget for GridPanel {
+    fn layout(&mut self, bounds: Rect) {
+        self.widget.layout(bounds)
+    }
+
     fn add_child(&mut self, child: Box<Widget>) {
         self.widget.add_child(child);
     }
