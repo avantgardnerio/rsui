@@ -45,11 +45,10 @@ impl Widget for GridPanel {
         let top = self.widget.bounds.origin[1];
         let grid_size = 25;
         let rectangle = Rectangle::new(self.background_color);
-        let square = rectangle::rectangle_by_corners(left, top, w, h);
+        let square = rectangle::rectangle_by_corners(left, top, left + w, top + h);
         rectangle.draw(square, &c.draw_state, c.transform.clone(), gl);
 
         let white = [1.0, 1.0, 1.0, 1.0];
-        println!("------- {:?}", self.widget.bounds.size[0]);
         for x in (0..(w as i32)).step_by(grid_size) {
             if x % 100 == 0 {
                 let transform = c.transform.trans((x as f64) + 2.0 + left, 21.0 + top);
@@ -73,7 +72,7 @@ impl Widget for GridPanel {
                 (y as f64) + top
             ];
             line(white, 1.0, points, c.transform.clone(), gl);
-            let transform = c.transform.trans(left, (y as f64) - 4.0 + top);
+            let transform = c.transform.trans(left + 2.0, (y as f64) + top + 21.0);
             Text::new_color(white, 24)
                 .draw(&y.to_string(), glyphs, &c.draw_state, transform, gl)
                 .unwrap();
