@@ -2,20 +2,28 @@ use piston_window::*;
 use piston_window::text::Text;
 
 use crate::widget::Widget;
+use crate::widget::WidgetImpl;
 
 pub struct GridPanel {
-    background_color: [f32; 4]
+    background_color: [f32; 4],
+    widget: WidgetImpl
 }
 
 impl GridPanel {
     pub fn new(background_color: [f32; 4]) -> Self {
+        let widget = WidgetImpl::new();
         GridPanel {
-            background_color
+            background_color,
+            widget
         }
     }
 }
 
 impl Widget for GridPanel {
+    fn add_child(&mut self, child: Box<Widget>) {
+        self.widget.add_child(child);
+    }
+    
     fn draw(&self, c: Context, gl: &mut G2d, width: f64, height: f64, glyphs: &mut Glyphs) {
         let grid_size = 25;
         let rectangle = Rectangle::new(self.background_color);
