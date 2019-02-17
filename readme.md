@@ -1,6 +1,6 @@
 # rsui
 
-![status](https://travis-ci.org/bgard6977/rust-draw.svg?branch=master)
+![status](https://api.travis-ci.org/bgard6977/rsui.svg?branch=master)
 
 ## Description
 
@@ -29,3 +29,26 @@ Pronounced "are-sue-we".
 - CSS-like layout languages
 - Native look and feel
 - Re-creating the browser
+
+## Current Screenshot
+
+![screenshot](doc/img/status.png)
+
+## Done
+
+- [x] Basic Widget interface
+- [x] Nested transforms and clipping
+- [x] Rendering
+
+## TODO
+
+- [ ] Invalidation
+- [ ] Scroll bars
+- [ ] Events
+- [ ] Event capturing 
+- [ ] Focus
+- [ ] Copy and paste
+- [ ] TextBox
+- [ ] Menu
+- [ ] FilePicker
+
