@@ -42,6 +42,13 @@ impl WidgetImpl {
 impl Widget for WidgetImpl {
     fn layout(&mut self, bounds: Rect) {
         self.bounds = bounds;
+        self.children.iter_mut().for_each(|child| {
+            let child_bounds = Rect {
+                origin: [0.0, 0.0],
+                size: bounds.size
+            };
+            child.layout(child_bounds);
+        });
     }
 
     fn add_child(&mut self, child: Box<Widget>) {
