@@ -57,20 +57,30 @@ impl Widget for WidgetImpl {
             let bounds = child.get_bounds();
             let trans = ctx.transform.trans(bounds.origin[0], bounds.origin[1]);
             let viewport = ctx.viewport.unwrap();
-            let scaleX = viewport.draw_size[0] as f64 / viewport.window_size[0];
-            let scaleY = viewport.draw_size[1] as f64 / viewport.window_size[1];
+            let scale_x = viewport.draw_size[0] as f64 / viewport.window_size[0];
+            let scale_y = viewport.draw_size[1] as f64 / viewport.window_size[1];
             //println!("view={:?} trans={:?}", ctx.view, trans);
-            let rect = [
-                (bounds.origin[0] * scaleX) as u32,
-                (bounds.origin[1] * scaleY) as u32,
-                (bounds.size[0] * scaleX) as u32,
-                (bounds.size[1] * scaleY) as u32
+            let clip_rect = [
+                ((bounds.origin[0] + viewport.rect[0] as f64) * scale_x) as u32,
+                ((bounds.origin[1] + viewport.rect[1] as f64) * scale_y) as u32,
+                (bounds.size[0] * scale_x) as u32,
+                (bounds.size[1] * scale_y) as u32
             ];
+            let vp = Viewport {
+                rect: [
+                    bounds.origin[0] as i32 + viewport.rect[0],
+                    bounds.origin[1] as i32 + viewport.rect[1],
+                    bounds.size[0] as i32,
+                    bounds.size[1] as i32
+                ],
+                draw_size: viewport.draw_size,
+                window_size: viewport.window_size
+            };
             let clipped = Context {
-                viewport: ctx.viewport,
+                viewport: Some(vp),
                 view: ctx.view,
                 transform: trans,
-                draw_state: ctx.draw_state.scissor(rect)
+                draw_state: ctx.draw_state.scissor(clip_rect)
             };
             child.draw(clipped, gl, glyphs);
         })
