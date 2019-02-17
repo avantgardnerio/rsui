@@ -32,7 +32,7 @@ impl Widget for ScrollPanel {
     }
 
     fn add_child(&mut self, child: Box<Widget>) {
-        self.widget.add_child(child);
+        self.widget.children.insert(0, child);
     }
 
     fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs) {

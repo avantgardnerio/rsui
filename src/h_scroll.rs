@@ -6,22 +6,27 @@ use crate::widget::WidgetImpl;
 use crate::widget::Rect;
 
 pub struct HScroll {
-    widget: WidgetImpl
+    widget: WidgetImpl,
+    width: f64
 }
 
 impl HScroll {
     pub fn new() -> Self {
         let widget = WidgetImpl::new();
         HScroll {
-            widget
+            widget,
+            width: 12.0
         }
     }
 }
 
 impl Widget for HScroll {
     fn layout(&mut self, bounds: Rect) {
-        println!("HScroll {:?}", bounds);
-        self.widget.layout(bounds);
+        let new_bounds = Rect {
+            origin: [0.0, bounds.size[1] - self.width],
+            size: [bounds.size[0], self.width]
+        };
+        self.widget.layout(new_bounds);
     }
 
     fn get_bounds(&self) -> Rect {
@@ -36,7 +41,7 @@ impl Widget for HScroll {
         let bounds = self.get_bounds();
         let width = bounds.size[0];
         let height = bounds.size[1];
-        let background_color = [0.2, 0.2, 0.2, 1.0];
+        let background_color = [0.3, 0.3, 0.3, 1.0];
         let rectangle = Rectangle::new(background_color);
         let square = rectangle::rectangle_by_corners(0.0, 0.0, width, height);
         rectangle.draw(square, &ctx.draw_state, ctx.transform.clone(), gl);
