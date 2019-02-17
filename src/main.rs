@@ -11,6 +11,10 @@ fn main() {
 
     let mut green_panel: Box<Widget> = Box::new(GridPanel::new([0.0, 1.0, 0.0, 1.0]));
 
+    let mut blue_panel: Box<Widget> = Box::new(GridPanel::new([0.0, 0.0, 1.0, 1.0]));
+
+    green_panel.add_child(blue_panel);
+
     red_panel.add_child(green_panel);
 
     let mut app = DrawingWindow::new(red_panel);

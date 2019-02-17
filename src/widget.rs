@@ -4,7 +4,7 @@ pub type Point = [f64; 2];
 
 pub type Color = [f32; 4];
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Rect {
     pub origin: Point,
     pub size: Point
@@ -59,6 +59,7 @@ impl Widget for WidgetImpl {
             let viewport = ctx.viewport.unwrap();
             let scaleX = viewport.draw_size[0] as f64 / viewport.window_size[0];
             let scaleY = viewport.draw_size[1] as f64 / viewport.window_size[1];
+            //println!("view={:?} trans={:?}", ctx.view, trans);
             let rect = [
                 (bounds.origin[0] * scaleX) as u32,
                 (bounds.origin[1] * scaleY) as u32,

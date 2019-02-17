@@ -22,12 +22,10 @@ impl GridPanel {
 
 impl Widget for GridPanel {
     fn layout(&mut self, bounds: Rect) {
+        println!("bounds={:?} color={:?}", bounds, self.background_color);
         self.widget.layout(bounds);
         self.widget.children.iter_mut().for_each(|child| {
-            let origin = [
-                bounds.size[0] / 4.0 + bounds.origin[0],
-                bounds.size[1] / 4.0 + bounds.origin[1]
-            ];
+            let origin = [bounds.size[0] / 4.0, bounds.size[1] / 4.0];
             let size = [bounds.size[0] / 2.0, bounds.size[1] / 2.0];
             let rect = Rect { origin, size };
             child.layout(rect)
