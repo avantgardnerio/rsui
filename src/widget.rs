@@ -1,4 +1,4 @@
-use piston_window::{G2d, Context, Glyphs};
+use piston_window::*;
 
 pub type Point = [f64; 2];
 
@@ -12,10 +12,12 @@ pub struct Rect {
 
 pub trait Widget {
     fn layout(&mut self, bounds: Rect);
+
+    fn get_bounds(&self) -> Rect;
     
     fn add_child(&mut self, child: Box<Widget>);
 
-    fn draw(&self, context: Context, gl: &mut G2d, width: f64, height: f64, glyphs: &mut Glyphs);
+    fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs);
 }
 
 pub struct WidgetImpl {
@@ -46,7 +48,30 @@ impl Widget for WidgetImpl {
         self.children.push(child)
     }
 
-    fn draw(&self, c: Context, gl: &mut G2d, width: f64, height: f64, glyphs: &mut Glyphs) {
-        self.children.iter().for_each(|it| it.draw(c, gl, width, height, glyphs))
+    fn get_bounds(&self) -> Rect {
+        return self.bounds;
+    }
+
+    fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs) {
+        self.children.iter().for_each(|child| {
+            let bounds = child.get_bounds();
+            let trans = ctx.transform.trans(bounds.origin[0], bounds.origin[1]);
+            let viewport = ctx.viewport.unwrap();
+            let scaleX = viewport.draw_size[0] as f64 / viewport.window_size[0];
+            let scaleY = viewport.draw_size[1] as f64 / viewport.window_size[1];
+            let rect = [
+                (bounds.origin[0] * scaleX) as u32,
+                (bounds.origin[1] * scaleY) as u32,
+                (bounds.size[0] * scaleX) as u32,
+                (bounds.size[1] * scaleY) as u32
+            ];
+            let clipped = Context {
+                viewport: ctx.viewport,
+                view: ctx.view,
+                transform: trans,
+                draw_state: ctx.draw_state.scissor(rect)
+            };
+            child.draw(clipped, gl, glyphs);
+        })
     }
 }

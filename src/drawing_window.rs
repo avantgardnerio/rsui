@@ -36,7 +36,7 @@ impl DrawingWindow {
         while let Some(event) = self.window.next() {
             let width = self.window.size().width;
             let height = self.window.size().height;
-            if(first) {
+            if first {
                 let rect = Rect {
                     origin: [0.0, 0.0],
                     size: [width as f64, height as f64]
@@ -44,8 +44,8 @@ impl DrawingWindow {
                 root.layout(rect);
                 first = false;
             }
-            self.window.draw_2d(&event, |context, gl| {
-                root.draw(context, gl, width, height, glyphs);
+            self.window.draw_2d(&event, |ctx, gl| {
+                root.draw(ctx, gl, glyphs);
             });
             match event {
                 Event::Input(ref input) => {
