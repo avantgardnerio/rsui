@@ -23,15 +23,25 @@ impl ScrollPanel {
 
 impl Widget for ScrollPanel {
     fn layout(&mut self, bounds: Rect) {
-        let my_width: f64 = self.get_bounds().size[0];
-        let child_width: f64 = self.get_child_bounds().size[0];
-        let diff: f64 = f64::min(0.0, child_width - my_width);
-        let max: f64 = diff / my_width;
-        println!("ScrollPanel mine={:?} child={:?} max={:?}", my_width, child_width, max);
-        self.widget.children.iter_mut().for_each(|child| {
-            child.downcast_mut::<HScroll>().map(|h_scroll| h_scroll.set_max(max));
-        });
         self.widget.bounds = bounds;
+        self.widget.children.iter_mut().for_each(|child| {
+            child.downcast_mut::<HScroll>().map(|h_scroll| {
+                h_scroll.layout(bounds);
+            });
+        });
+
+        // http://csdgn.org/article/scrollbar
+        let window_size: f64 = self.get_bounds().size[0];
+        let track_size = window_size; // Same for now
+        let content_size: f64 = self.get_child_bounds().size[0];
+        let window_content_ratio = window_size / content_size;
+        let grip_size = track_size * window_content_ratio;
+        self.widget.children.iter_mut().for_each(|child| {
+            child.downcast_mut::<HScroll>().map(|h_scroll| {
+                h_scroll.layout(bounds);
+                h_scroll.set_grip_size(grip_size);
+            });
+        });
     }
 
     fn get_bounds(&self) -> Rect {
