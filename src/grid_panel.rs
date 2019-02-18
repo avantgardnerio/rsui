@@ -36,6 +36,10 @@ impl Widget for GridPanel {
         return self.widget.bounds;
     }
 
+    fn get_child_bounds(&self) -> Rect {
+        return self.widget.get_child_bounds();
+    }
+
     fn add_child(&mut self, child: Box<Widget>) {
         self.widget.add_child(child);
     }

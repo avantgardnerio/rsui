@@ -10,15 +10,37 @@ pub struct Rect {
     pub size: Point
 }
 
-pub trait Widget {
+impl Rect {
+    fn min() -> Rect {
+        let origin: Point = [std::f64::INFINITY, std::f64::INFINITY];
+        let size: Point = [std::f64::NEG_INFINITY, std::f64::NEG_INFINITY];
+        return Rect { origin, size };
+    }
+
+    fn union(a: Rect, b: Rect) -> Rect {
+        let w = f64::min(a.origin[0], b.origin[0]);
+        let n = f64::min(a.origin[1], b.origin[1]);
+        let e = f64::max(a.origin[0] + a.size[0], b.origin[0] + b.size[0]);
+        let s = f64::max(a.origin[1] + a.size[1], b.origin[1] + b.size[1]);
+        let origin: Point = [w, n];
+        let size: Point = [e - w, s - n];
+        return Rect {origin, size};
+    }
+}
+
+pub trait Widget: mopa::Any {
     fn layout(&mut self, bounds: Rect);
 
     fn get_bounds(&self) -> Rect;
+
+    fn get_child_bounds(&self) -> Rect;
     
     fn add_child(&mut self, child: Box<Widget>);
 
     fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs);
 }
+
+mopafy!(Widget);
 
 pub struct WidgetImpl {
     pub bounds: Rect,
@@ -57,6 +79,13 @@ impl Widget for WidgetImpl {
 
     fn get_bounds(&self) -> Rect {
         return self.bounds;
+    }
+
+    fn get_child_bounds(&self) -> Rect {
+        let result = self.children.iter().fold(Rect::min(), |acc, cur| {
+            return Rect::union(acc, cur.get_bounds());
+        });
+        return result;
     }
 
     fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs) {

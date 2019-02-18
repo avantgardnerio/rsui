@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate mopa;
+
 mod drawing_window;
 mod grid_panel;
 mod widget;
