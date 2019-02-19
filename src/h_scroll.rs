@@ -2,7 +2,7 @@ use piston_window::*;
 
 use crate::widget::Widget;
 use crate::widget::WidgetImpl;
-use crate::widget::Rect;
+use crate::geom::Rect;
 
 pub struct HScroll {
     widget: WidgetImpl,
@@ -47,7 +47,7 @@ impl Widget for HScroll {
         self.widget.add_child(child);
     }
 
-    fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs) {
+    fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs, rect: Rect, depth: i32) {
         let bounds = self.get_bounds();
         let width = bounds.size[0];
         let height = bounds.size[1];
@@ -62,6 +62,6 @@ impl Widget for HScroll {
         let grip_shape = rectangle::rectangle_by_corners(0.0, 0.0, self.grip_size, height);
         grip_rect.draw(grip_shape, &ctx.draw_state, ctx.transform.clone(), gl);
 
-        self.widget.draw(ctx, gl, glyphs)
+        self.widget.draw(ctx, gl, glyphs, rect, depth)
     }
 }

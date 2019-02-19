@@ -3,7 +3,7 @@ use glfw_window::GlfwWindow;
 use piston_window::{Event, Input};
 
 use crate::widget::Widget;
-use crate::widget::Rect;
+use crate::geom::Rect;
 
 pub struct DrawingWindow {
     pub window: PistonWindow<GlfwWindow>,
@@ -36,16 +36,16 @@ impl DrawingWindow {
         while let Some(event) = self.window.next() {
             let width = self.window.size().width;
             let height = self.window.size().height;
+            let rect = Rect {
+                origin: [0.0, 0.0],
+                size: [width as f64, height as f64]
+            };
             if first {
-                let rect = Rect {
-                    origin: [0.0, 0.0],
-                    size: [width as f64, height as f64]
-                };
                 root.layout(rect);
                 first = false;
             }
             self.window.draw_2d(&event, |ctx, gl| {
-                root.draw(ctx, gl, glyphs);
+                root.draw(ctx, gl, glyphs, rect, 0);
             });
             match event {
                 Event::Input(ref input) => {

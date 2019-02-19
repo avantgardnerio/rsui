@@ -1005,6 +1005,7 @@ dependencies = [
  "mopa 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston_window 0.87.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "pistoncore-glfw_window 0.47.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "vecmath 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

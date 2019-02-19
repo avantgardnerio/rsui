@@ -3,7 +3,7 @@ use piston_window::text::Text;
 
 use crate::widget::Widget;
 use crate::widget::WidgetImpl;
-use crate::widget::Rect;
+use crate::geom::Rect;
 
 pub struct GridPanel {
     background_color: [f32; 4],
@@ -44,7 +44,7 @@ impl Widget for GridPanel {
         self.widget.add_child(child);
     }
     
-    fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs) {
+    fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs, rect: Rect, depth: i32) {
         let width = self.widget.bounds.size[0];
         let height = self.widget.bounds.size[1];
         let grid_size = 25;
@@ -72,6 +72,6 @@ impl Widget for GridPanel {
                 .unwrap();
         }
 
-        self.widget.draw(ctx, gl, glyphs)
+        self.widget.draw(ctx, gl, glyphs, rect, depth);
     }
 }

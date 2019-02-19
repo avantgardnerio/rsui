@@ -6,6 +6,7 @@ mod grid_panel;
 mod widget;
 mod scroll_panel;
 mod h_scroll;
+mod geom;
 
 use drawing_window::DrawingWindow;
 use grid_panel::GridPanel;

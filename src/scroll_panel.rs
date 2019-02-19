@@ -2,9 +2,9 @@ use piston_window::*;
 
 use crate::widget::Widget;
 use crate::widget::WidgetImpl;
-use crate::widget::Rect;
+use crate::geom::Rect;
 use crate::h_scroll::HScroll;
-use crate::widget::Point;
+use crate::geom::Point;
 
 pub struct ScrollPanel {
     widget: WidgetImpl
@@ -62,7 +62,7 @@ impl Widget for ScrollPanel {
         self.widget.children.insert(0, child);
     }
 
-    fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs) {
-        self.widget.draw(ctx, gl, glyphs)
+    fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs, rect: Rect, depth: i32) {
+        self.widget.draw(ctx, gl, glyphs, rect, depth);
     }
 }
