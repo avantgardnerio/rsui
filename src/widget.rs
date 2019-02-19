@@ -66,22 +66,16 @@ impl Widget for WidgetImpl {
     }
 
     fn draw(&self, ctx: Context, gl: &mut G2d, glyphs: &mut Glyphs, rect: Rect, depth: i32) {
-        let self_bounds = self.get_bounds()
-            .translate(mul(self.get_bounds().origin, -1.0))
-            .translate(rect.origin);
         self.children.iter().for_each(|child| {
-            let child_bounds = child.get_bounds().translate(rect.origin);
-            let trans = ctx.transform.trans(
-                child.get_bounds().origin[0],
-                child.get_bounds().origin[1]
-            );
-            let clip_bounds = Rect::isec(rect, Rect::isec(self_bounds, child_bounds));
-            let clip_rect = clip_bounds.to_u32();
+            let bounds = child.get_bounds();
+            let trans = ctx.transform.trans(bounds.origin[0], bounds.origin[1]);
+            let screen_bounds = bounds.translate(rect.origin);
+            let clip_bounds = Rect::isec(rect, screen_bounds);
             let clipped = Context {
                 viewport: ctx.viewport,
                 view: ctx.view,
                 transform: trans,
-                draw_state: ctx.draw_state.scissor(clip_rect)
+                draw_state: ctx.draw_state.scissor(clip_bounds.to_u32())
             };
             child.draw(clipped, gl, glyphs, clip_bounds, depth + 1);
         })
