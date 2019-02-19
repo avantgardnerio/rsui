@@ -75,7 +75,7 @@ impl Widget for WidgetImpl {
                 child.get_bounds().origin[0],
                 child.get_bounds().origin[1]
             );
-            let clip_bounds = Rect::intersection(self_bounds, child_bounds);
+            let clip_bounds = Rect::isec(rect, Rect::isec(self_bounds, child_bounds));
             let clip_rect = clip_bounds.to_u32();
             let clipped = Context {
                 viewport: ctx.viewport,

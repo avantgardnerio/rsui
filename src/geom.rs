@@ -43,13 +43,13 @@ impl Rect {
         return Rect {origin, size};
     }
 
-    pub fn intersection(a: Rect, b: Rect) -> Rect {
+    pub fn isec(a: Rect, b: Rect) -> Rect {
         let w = f64::max(a.origin[0], b.origin[0]);
         let n = f64::max(a.origin[1], b.origin[1]);
         let e = f64::min(a.origin[0] + a.size[0], b.origin[0] + b.size[0]);
         let s = f64::min(a.origin[1] + a.size[1], b.origin[1] + b.size[1]);
         let origin: Point = [w, n];
-        let size: Point = [e - w, s - n];
+        let size: Point = [f64::max(0.0, e - w), f64::max(0.0, s - n)];
         return Rect {origin, size};
     }
 }
